@@ -51,14 +51,15 @@ document.querySelectorAll('.gf-btn').forEach(btn => {
 
 /* ===== LIGHTBOX ===== */
 const galleryData = [
-  { category:'Living Room', title:'Warm Minimalist Living Room', desc:'Custom furniture, accent wall & layered lighting for a serene living space.' },
-  { category:'Kitchen', title:'Blue Gloss Modular Kitchen', desc:'Sleek blue gloss shutters with quartz countertop and smart storage solutions.' },
-  { category:'Bedroom', title:'Lavender Luxury Bedroom', desc:'LED cove ceiling, custom headboard and premium fabrics for restful sleep.' },
-  { category:'False Ceiling', title:'LED Cove False Ceiling', desc:'Dramatic POP false ceiling with ambient LED cove lighting and center fixture.' },
-  { category:'Office', title:'Contemporary Office Interior', desc:'Ergonomic professional workspace with branded partitions and smart lighting.' },
-  { category:'Living Room', title:'Earthy Tones Living Room', desc:'Warm orange palette with custom TV unit, sofa set and area rug.' },
-  { category:'Bedroom', title:'Gold Accent Bedroom', desc:'Walk-in wardrobe, gold accents and warm wood tones for a luxe retreat.' },
-  { category:'Kitchen', title:'Rose Gloss Modular Kitchen', desc:'Bold rose gloss cabinets with open shelves and granite worktops.' },
+  { category:'Living Room',  title:'Marble TV Wall & False Ceiling',  desc:'Custom TV unit with Italian marble panel, wooden fluted frame and vibrant false ceiling with pink & yellow POP design.',          img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.37%20AM%20(1).jpeg' },
+  { category:'Kitchen',      title:'Mint Green Modular Kitchen',       desc:'Elegant mint-finish modular kitchen with black granite countertop, pendant lights and a beautiful teak wood arched entrance.',       img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.37%20AM.jpeg' },
+  { category:'Bedroom',      title:'Pink Gloss Wardrobe Unit',         desc:'Floor-to-ceiling pink & white gloss wardrobe with sliding doors, full-length dressing mirror and matching storage units.',          img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.36%20AM%20(1).jpeg' },
+  { category:'False Ceiling',title:'Sri Yantra Backlit Ceiling',       desc:'Unique backlit false ceiling panel with intricate Sri Yantra sacred geometry CNC cut design and warm golden LED glow.',              img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.38%20AM%20(1).jpeg' },
+  { category:'Pooja Room',   title:'Wooden Mandir & Pooja Unit',       desc:'Handcrafted teak wood pooja room with CNC backlit Om/Ganesha panel, marble platform and blue LED cove ceiling above.',              img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.39%20AM%20(2).jpeg' },
+  { category:'Living Room',  title:'Marble & Wood TV Accent Wall',     desc:'Stunning full-width TV accent wall with white marble panels, wooden fluted arches and multi-colour LED cove ceiling lighting.',       img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.39%20AM%20(1).jpeg' },
+  { category:'Bedroom',      title:'Grey Luxury Master Bedroom',       desc:'Modern bedroom with grey fluted headboard wall, upholstered bed frame, side tables and warm LED cove ceiling over hardwood flooring.', img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.39%20AM.jpeg' },
+  { category:'Kitchen',      title:'Pink Gloss L-Shape Kitchen',       desc:'Spacious L-shaped modular kitchen in gloss pink with black granite tops, warm-lit glass display cabinets and marble wall tiles.',     img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.37%20AM%20(2).jpeg' },
+  { category:'Bedroom',      title:'Hydraulic Storage Bed',            desc:'Space-saving hydraulic lift-up storage bed with custom built overhead cabinets in matching pink & white finish — maximum storage, zero clutter.', img:'Photos/WhatsApp%20Image%202026-06-27%20at%209.34.36%20AM.jpeg' },
 ];
 
 const lightbox = document.getElementById('lightbox');
@@ -77,11 +78,18 @@ function openLb(i) {
 function renderLb() {
   const d = galleryData[lbIndex];
   lbBody.innerHTML = `
-    <div class="lb-eyebrow">${d.category}</div>
-    <h3>${d.title}</h3>
-    <p>${d.desc}</p>
-    <p class="lb-note">📸 View actual project photos on our Instagram page</p>
-    <a href="https://www.instagram.com/home_decor_interior06_huliyar/" target="_blank" class="lb-cta">View on Instagram →</a>
+    <div class="lb-img-wrap">
+      <img class="lb-photo" src="${d.img}" alt="${d.title}" />
+    </div>
+    <div class="lb-info">
+      <div class="lb-eyebrow">${d.category}</div>
+      <h3>${d.title}</h3>
+      <p>${d.desc}</p>
+      <a href="https://www.instagram.com/home_decor_interior06_huliyar/" target="_blank" class="lb-cta">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        View More on Instagram
+      </a>
+    </div>
   `;
 }
 function closeLb() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
