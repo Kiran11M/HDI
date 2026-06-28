@@ -265,3 +265,67 @@ const revealObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); revealObs.unobserve(e.target); } });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+/* ===== FOUNDER PHOTO GALLERY ===== */
+const founderPhotos = {
+  yogi: [
+    'Founder%20Photo/Yogi%20Maharaj/WhatsApp%20Image%202026-06-28%20at%209.25.02%20AM%20(1).jpeg',
+    'Founder%20Photo/Yogi%20Maharaj/WhatsApp%20Image%202026-06-28%20at%209.25.02%20AM.jpeg',
+    'Founder%20Photo/Yogi%20Maharaj/WhatsApp%20Image%202026-06-28%20at%209.25.02%20AM%20(2).jpeg',
+    'Founder%20Photo/Yogi%20Maharaj/WhatsApp%20Image%202026-06-28%20at%209.25.03%20AM.jpeg',
+  ],
+  prashanth: [
+    'Founder%20Photo/Prashanth/WhatsApp%20Image%202026-06-28%20at%209.20.47%20AM.jpeg',
+    'Founder%20Photo/Prashanth/WhatsApp%20Image%202026-06-28%20at%209.20.45%20AM%20(1).jpeg',
+    'Founder%20Photo/Prashanth/WhatsApp%20Image%202026-06-28%20at%209.20.45%20AM.jpeg',
+    'Founder%20Photo/Prashanth/WhatsApp%20Image%202026-06-28%20at%209.20.45%20AM%20(2).jpeg',
+  ]
+};
+const founderNames = { yogi: 'Yogi Maharaj', prashanth: 'Prashanth' };
+
+const founderModal = document.getElementById('founderModal');
+const fmPhoto     = document.getElementById('fmPhoto');
+const fmNameEl    = document.getElementById('fmName');
+const fmCounter   = document.getElementById('fmCounter');
+const fmClose     = document.getElementById('fmClose');
+const fmPrev      = document.getElementById('fmPrev');
+const fmNext      = document.getElementById('fmNext');
+
+let fmList = [], fmIdx = 0, fmKey = '';
+
+function openFounderModal(key) {
+  fmKey  = key;
+  fmList = founderPhotos[key];
+  fmIdx  = 0;
+  renderFm();
+  founderModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderFm() {
+  fmPhoto.src        = fmList[fmIdx];
+  fmPhoto.alt        = founderNames[fmKey];
+  fmNameEl.textContent   = founderNames[fmKey];
+  fmCounter.textContent  = (fmIdx + 1) + ' / ' + fmList.length;
+}
+
+function closeFm() { founderModal.classList.remove('open'); document.body.style.overflow = ''; }
+
+function fmGoNext() { fmIdx = (fmIdx + 1) % fmList.length; renderFm(); }
+function fmGoPrev() { fmIdx = (fmIdx - 1 + fmList.length) % fmList.length; renderFm(); }
+
+fmClose.addEventListener('click', closeFm);
+fmNext.addEventListener('click', fmGoNext);
+fmPrev.addEventListener('click', fmGoPrev);
+founderModal.addEventListener('click', e => { if (e.target === founderModal) closeFm(); });
+
+document.addEventListener('keydown', e => {
+  if (!founderModal.classList.contains('open')) return;
+  if (e.key === 'Escape')      closeFm();
+  if (e.key === 'ArrowRight')  fmGoNext();
+  if (e.key === 'ArrowLeft')   fmGoPrev();
+});
+
+document.querySelectorAll('.founder-card').forEach(card => {
+  card.addEventListener('click', () => openFounderModal(card.dataset.founder));
+});
