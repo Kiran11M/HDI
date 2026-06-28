@@ -853,3 +853,54 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
   .process-steps { grid-template-columns:1fr; }
   .vp-featured .vp-wrap { height:240px; }
 }
+
+/* ===== FEEDBACK SECTION ===== */
+.feedback-section { background:var(--bg-2); padding:90px 0; }
+.feedback-wrap { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:48px; align-items:start; }
+
+.feedback-form-card {
+  background:#fff; border-radius:var(--radius-xl);
+  padding:36px 32px; box-shadow:var(--shadow-md);
+}
+.feedback-form-card h3 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-bottom:18px; color:var(--text); }
+
+.star-rating { display:flex; gap:6px; margin-bottom:6px; }
+.star { font-size:2rem; color:#ddd; cursor:pointer; transition:color 0.15s, transform 0.15s; }
+.star.active, .star.hover { color:#F5C518; transform:scale(1.15); }
+.star-label { font-size:0.82rem; color:var(--text-3); margin-bottom:16px; }
+
+.fb-input {
+  width:100%; border:1.5px solid var(--border);
+  border-radius:var(--radius); padding:12px 14px;
+  font-size:0.95rem; font-family:inherit; color:var(--text);
+  background:#fafafa; margin-bottom:14px; outline:none;
+  transition:border-color 0.2s;
+}
+.fb-input:focus { border-color:var(--amber); background:#fff; }
+.fb-textarea { resize:vertical; min-height:100px; }
+.fb-submit { width:100%; justify-content:center; font-size:1rem; }
+.fb-thanks { color:var(--amber); font-weight:600; margin-top:12px; text-align:center; }
+
+/* reviews list */
+.feedback-reviews { display:flex; flex-direction:column; gap:16px; max-height:520px; overflow-y:auto; }
+.fb-review-card {
+  background:#fff; border-radius:var(--radius-lg);
+  padding:20px 22px; box-shadow:var(--shadow-sm);
+  border-left:4px solid var(--amber);
+  animation:fadeInUp 0.4s ease;
+}
+.fb-review-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.fb-review-name { font-weight:700; color:var(--text); font-size:0.95rem; }
+.fb-review-stars { color:#F5C518; font-size:1rem; letter-spacing:1px; }
+.fb-review-msg { font-size:0.88rem; color:var(--text-2); line-height:1.6; }
+.fb-review-date { font-size:0.75rem; color:var(--text-3); margin-top:8px; }
+.fb-empty { text-align:center; color:var(--text-3); font-size:0.9rem; padding:30px 0; }
+
+/* visit counter */
+.visit-counter { display:flex; align-items:center; gap:5px; font-size:0.82rem; color:rgba(255,255,255,0.65); }
+.visit-counter strong { color:#fff; }
+
+@media (max-width:768px) {
+  .feedback-wrap { grid-template-columns:1fr; }
+  .feedback-reviews { max-height:400px; }
+}

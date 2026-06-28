@@ -329,3 +329,107 @@ document.addEventListener('keydown', e => {
 document.querySelectorAll('.founder-card').forEach(card => {
   card.addEventListener('click', () => openFounderModal(card.dataset.founder));
 });
+
+/* ===== VISIT COUNTER ===== */
+(function () {
+  const key = 'hdi_visit_count';
+  const count = (parseInt(localStorage.getItem(key) || '0') + 1);
+  localStorage.setItem(key, count);
+  const el = document.getElementById('visitCount');
+  if (el) el.textContent = count.toLocaleString('en-IN');
+})();
+
+/* ===== FEEDBACK ===== */
+(function () {
+  const STORE_KEY = 'hdi_feedback';
+  const starLabels = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+  let selectedRating = 0;
+
+  const stars     = document.querySelectorAll('.star');
+  const starLabel = document.getElementById('starLabel');
+  const fbName    = document.getElementById('fbName');
+  const fbMsg     = document.getElementById('fbMsg');
+  const fbSubmit  = document.getElementById('fbSubmit');
+  const fbThanks  = document.getElementById('fbThanks');
+  const fbList    = document.getElementById('feedbackList');
+
+  function setStars(val, isHover) {
+    stars.forEach(s => {
+      const v = parseInt(s.dataset.val);
+      s.classList.toggle('active', !isHover && v <= selectedRating);
+      s.classList.toggle('hover',   isHover && v <= val);
+    });
+    if (starLabel) starLabel.textContent = starLabels[val] || (selectedRating ? starLabels[selectedRating] : 'Tap to rate');
+  }
+
+  stars.forEach(s => {
+    s.addEventListener('mouseenter', () => setStars(parseInt(s.dataset.val), true));
+    s.addEventListener('mouseleave', () => setStars(selectedRating, false));
+    s.addEventListener('click', () => {
+      selectedRating = parseInt(s.dataset.val);
+      setStars(selectedRating, false);
+    });
+  });
+
+  function getReviews() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch { return []; }
+  }
+
+  function saveReviews(arr) {
+    localStorage.setItem(STORE_KEY, JSON.stringify(arr));
+  }
+
+  function renderCard(r) {
+    const div = document.createElement('div');
+    div.className = 'fb-review-card';
+    const starsHtml = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+    div.innerHTML = `
+      <div class="fb-review-header">
+        <span class="fb-review-name">${r.name}</span>
+        <span class="fb-review-stars">${starsHtml}</span>
+      </div>
+      <p class="fb-review-msg">${r.msg}</p>
+      <p class="fb-review-date">${r.date}</p>`;
+    return div;
+  }
+
+  function renderList() {
+    if (!fbList) return;
+    fbList.innerHTML = '';
+    const reviews = getReviews();
+    if (!reviews.length) {
+      fbList.innerHTML = '<p class="fb-empty">No reviews yet — be the first!</p>';
+      return;
+    }
+    reviews.slice().reverse().forEach(r => fbList.appendChild(renderCard(r)));
+  }
+
+  if (fbSubmit) {
+    fbSubmit.addEventListener('click', () => {
+      const name = (fbName.value || '').trim();
+      const msg  = (fbMsg.value  || '').trim();
+      if (!selectedRating) { alert('Please select a star rating.'); return; }
+      if (!name)           { alert('Please enter your name.'); return; }
+      if (!msg)            { alert('Please write your feedback.'); return; }
+
+      const reviews = getReviews();
+      reviews.push({
+        rating: selectedRating,
+        name,
+        msg,
+        date: new Date().toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })
+      });
+      saveReviews(reviews);
+
+      fbName.value = '';
+      fbMsg.value  = '';
+      selectedRating = 0;
+      setStars(0, false);
+      fbThanks.style.display = 'block';
+      setTimeout(() => { fbThanks.style.display = 'none'; }, 3500);
+      renderList();
+    });
+  }
+
+  renderList();
+})();
